@@ -5,27 +5,272 @@
 
 
 
+<style>
+  /* Concept: a committed dark-green look for a growth agency. Near-black emerald ground, a soft light that follows
+     the cursor, ivory text, brand navy kept for the closing band, amber flags for anything still to confirm.
+     The blocky OGP letterforms are the one graphic motif. */
+  :root {
+    color-scheme: dark;
+    --bg: #06110C;
+    --bg-2: #0A1A12;
+    --ink: #F6F5F1;
+    --muted: #A9C7B6;
+    --dim: #7F9B8B;
+    --line: rgba(255, 255, 255, .12);
+    --glass: rgba(255, 255, 255, .05);
+    --green: #3DBE7A;
+    --green-deep: #17583A;
+    --navy: #23385A;
+    --navy-deep: #0F2036;
+    --btn: #F6F5F1;
+    --btn-ink: #06261A;
+    --flag-bg: #FBEBB8;
+    --flag-ink: #6B4E00;
+    --head: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    interpolate-size: allow-keywords;
+  }
+  #app[lang="ar"] { --head: "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif; --body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif; }
+  #app[lang="en"] .ar, #app[lang="ar"] .en { display: none !important; }
 
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+  h1, h2, h3, h4 { font-family: var(--head); margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  section { scroll-margin-top: 72px; }
+
+  .lg { height: 22px; width: 75px; display: block; color: var(--ink); }
+  .btn { display: inline-block; text-decoration: none; background: var(--btn); color: var(--btn-ink); padding: 14px 26px; font: 700 15px var(--body); border-radius: 999px; border: 1px solid transparent; cursor: pointer; transition: transform .16s var(--ease-out), background .2s ease; }
+  .btn:active { transform: scale(.97); }
+  @media (hover: hover) and (pointer: fine) { .btn:hover { transform: translateY(-2px); background: #fff; } .btn:active { transform: scale(.97); } }
+  .btn.sm { padding: 9px 18px; font-size: 13px; }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: #3C7A58; }
+  @media (hover: hover) and (pointer: fine) { .btn.ghost:hover { background: rgba(61, 190, 122, .12); } }
+  .flag { display: inline-block; font: 700 10px var(--body); letter-spacing: .05em; text-transform: uppercase; background: var(--flag-bg); color: var(--flag-ink); padding: 2px 8px; border-radius: 10px; margin-inline-start: 8px; vertical-align: middle; white-space: nowrap; }
+
+  /* nav */
+  .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(6, 17, 12, .78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; gap: 26px; height: 64px; }
+  .nav .links { display: flex; gap: 24px; font-size: 14px; color: var(--muted); }
+  .nav .links a { text-decoration: none; }
+  .nav .links a:hover { color: var(--ink); }
+  .nav .sp { flex: 1; }
+  .nav .lang { background: none; color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font: 600 13px var(--body); cursor: pointer; }
+  .nav .lang:hover { border-color: var(--green); }
+
+  /* hero with cursor light */
+  .hero { position: relative; overflow: hidden; --x: 50%; --y: 30%; text-align: center; border-bottom: 1px solid var(--line); }
+  .hero .amb { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% -10%, var(--green-deep) 0%, rgba(10, 31, 22, 0) 62%); pointer-events: none; }
+  .hero .dots { position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(rgba(190, 255, 220, .55) 1px, transparent 1.6px); background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(300px circle at var(--x) var(--y), #000 0%, transparent 100%); mask-image: radial-gradient(300px circle at var(--x) var(--y), #000 0%, transparent 100%); }
+  .hero .spot { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(580px circle at var(--x) var(--y), rgba(54, 176, 110, .5) 0%, rgba(20, 100, 64, .22) 38%, rgba(6, 17, 12, 0) 70%); }
+  .hero .in { position: relative; z-index: 2; display: grid; gap: 22px; justify-items: center; padding-block: 88px 36px; }
+  .eyebrow { font: 600 12px var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--green); }
+  .hero h1 { font-size: clamp(36px, 6.4vw, 70px); font-weight: 800; line-height: 1.04; letter-spacing: -.02em; max-width: 17ch; }
+  #app[lang="ar"] .hero h1 { line-height: 1.25; letter-spacing: 0; }
+  .hero .sub { color: var(--muted); font-size: clamp(16px, 2vw, 19px); max-width: 52ch; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 6px; }
+  .stats { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; padding-bottom: 44px; text-align: start; }
+  .stats div { background: var(--glass); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; color: var(--muted); font-size: 13px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .stats b { display: block; font: 800 28px var(--head); color: var(--ink); }
+
+  /* shared section scaffolding */
+  .sec { padding-block: 88px; }
+  .sec.alt { background: var(--bg-2); border-block: 1px solid var(--line); }
+  .head { display: grid; gap: 12px; margin-bottom: 40px; max-width: 62ch; }
+  .head h2 { font-size: clamp(28px, 4.2vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -.015em; }
+  #app[lang="ar"] .head h2 { line-height: 1.3; letter-spacing: 0; }
+  .head p { color: var(--muted); font-size: 17px; }
+
+  /* credentials */
+  .creds { display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch; }
+  .cred { flex: 1 1 220px; min-width: 0; display: flex; align-items: center; gap: 16px; background: var(--glass); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; }
+  .cred img { background: #fff; border-radius: 8px; padding: 8px; max-height: 76px; width: auto; }
+  .cred b { display: block; font: 700 16px var(--head); }
+  .cred span { color: var(--muted); font-size: 13px; }
+
+  /* clients marquee */
+  .marq { overflow: hidden; direction: ltr; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .track { display: flex; width: max-content; margin: 0; padding: 0; list-style: none; animation: slide 46s linear infinite; }
+  .marq:hover .track { animation-play-state: paused; }
+  .tile { flex: none; height: 76px; margin-right: 16px; padding: 0 26px; display: flex; align-items: center; background: #fff; border-radius: 14px; }
+  .tile img { height: auto; width: auto; max-height: 44px; max-width: 150px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* equation + calculator */
+  .eq { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; margin-bottom: 28px; }
+  .eq .lv { flex: 1 1 150px; background: var(--glass); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 2px; }
+  .eq .lv b { font: 800 24px var(--head); }
+  .eq .lv span { color: var(--muted); font-size: 13px; }
+  .eq .op { display: flex; align-items: center; font: 800 28px var(--head); color: var(--green); }
+  .eq .lv.res { background: linear-gradient(135deg, rgba(61, 190, 122, .2), rgba(61, 190, 122, .06)); border-color: rgba(61, 190, 122, .5); }
+  .calc { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; background: var(--glass); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
+  .calc > * { min-width: 0; }
+  .calc h3 { font-size: 20px; margin-bottom: 18px; }
+  .row { display: grid; gap: 6px; margin-bottom: 18px; }
+  .row label { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--muted); }
+  .row output { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
+  input[type=range] { width: 100%; accent-color: var(--green); }
+  .sw { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--ink); cursor: pointer; }
+  .sw input { width: 18px; height: 18px; accent-color: var(--green); }
+  .out { display: grid; align-content: center; gap: 8px; text-align: start; background: rgba(0, 0, 0, .25); border-radius: 14px; padding: 24px; }
+  .out small { color: var(--dim); font-size: 12px; }
+  .out .big { font: 800 clamp(30px, 4.4vw, 46px) var(--head); font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .out .gain { color: var(--green); font-weight: 700; }
+
+  /* services */
+  .svcs { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .svc { position: relative; overflow: hidden; background: var(--glass); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: grid; gap: 6px; align-content: start; min-width: 0; --mx: 50%; --my: 50%; }
+  .svc::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s ease; background: radial-gradient(260px circle at var(--mx) var(--my), rgba(61, 190, 122, .2), transparent 70%); }
+  @media (hover: hover) and (pointer: fine) { .svc:hover::before { opacity: 1; } }
+  .svc > * { position: relative; }
+  .svc svg { width: 34px; height: 34px; color: var(--green); margin-bottom: 8px; }
+  .svc h3 { font-size: 18px; }
+  .svc p { color: var(--muted); font-size: 14px; }
+  .more { margin-top: 32px; }
+
+  /* process */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 22px; margin: 0; padding: 0; list-style: none; }
+  .steps li { position: relative; border-top: 2px solid var(--line); padding-top: 14px; display: grid; gap: 6px; align-content: start; }
+  .steps li::before { content: ""; position: absolute; top: -2px; left: 0; right: 0; height: 2px; background: var(--green); transform-origin: left center; }
+  #app[dir="rtl"] .steps li::before { transform-origin: right center; }
+  .steps .n { font: 700 13px var(--head); color: var(--green); letter-spacing: .1em; }
+  .steps h3 { font-size: 18px; }
+  .steps p { color: var(--muted); font-size: 14px; }
+
+  /* results and why */
+  .cards3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .case { background: var(--glass); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: grid; gap: 8px; }
+  .case .who { color: var(--dim); font-size: 13px; }
+  .case .big { font: 800 44px var(--head); color: var(--green); line-height: 1; }
+  .case p { color: var(--muted); font-size: 14px; }
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin-bottom: 36px; }
+  .why div { border-inline-start: 2px solid var(--green); padding-inline-start: 18px; display: grid; gap: 6px; align-content: start; }
+  .why h3 { font-size: 18px; }
+  .why p { color: var(--muted); font-size: 14px; }
+  .quote { font: 700 clamp(22px, 3.4vw, 34px) var(--head); line-height: 1.25; max-width: 28ch; text-wrap: balance; }
+  .quote em { font-style: normal; color: var(--green); }
+
+  /* tools + faq */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .chips li { border: 1px solid var(--line); background: var(--glass); border-radius: 999px; padding: 8px 16px; font-size: 14px; color: var(--muted); }
+  details { border-bottom: 1px solid var(--line); padding-block: 18px; }
+  details:first-of-type { border-top: 1px solid var(--line); }
+  summary { cursor: pointer; font: 700 18px var(--head); list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--green); font-size: 24px; line-height: 1; transition: transform .2s var(--ease-out); }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { color: var(--muted); margin-top: 10px; max-width: 64ch; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* contact band keeps the brand navy */
+  .band { background: linear-gradient(135deg, var(--navy-deep) 0%, #0E3A2C 100%); border-block: 1px solid var(--line); }
+  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .contact > * { min-width: 0; }
+  .contact h2 { font-size: clamp(30px, 4.6vw, 50px); font-weight: 800; line-height: 1.1; margin-bottom: 14px; }
+  #app[lang="ar"] .contact h2 { line-height: 1.3; }
+  .contact .lead { color: #C9D8D0; font-size: 17px; margin-bottom: 24px; }
+  .facts { display: grid; gap: 10px; color: #C9D8D0; font-size: 15px; }
+  .facts b { color: var(--ink); }
+  form { display: grid; gap: 14px; background: rgba(0, 0, 0, .22); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+  form label { display: grid; gap: 6px; font-size: 13px; color: #C9D8D0; }
+  form input, form select { font: 500 15px var(--body); color: var(--ink); background: rgba(255, 255, 255, .08); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; width: 100%; transition: border-color .15s ease, background .15s ease; }
+  form input:focus, form select:focus { border-color: var(--green); outline: none; }
+  form select option { color: #06261A; }
+  #status { font-size: 13px; color: var(--green); min-height: 20px; }
+
+  footer { padding-block: 40px; color: var(--dim); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; align-items: center; }
+  footer .links { display: flex; gap: 22px; flex-wrap: wrap; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  /* motion: one authored hero entrance, then only feedback, state changes and four list reveals */
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes rise-focus { from { opacity: 0; transform: translateY(16px); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes swap { from { opacity: .55; filter: blur(3px); } to { opacity: 1; filter: blur(0); } }
+  @keyframes pop-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero .amb, .hero .dots, .hero .spot { animation: fade-in 1.4s ease-out both; }
+    .hero .eyebrow { animation: rise .7s var(--ease-out) .05s both; }
+    .hero h1 { animation: rise-focus .8s var(--ease-out) .12s both; }
+    .hero .sub { animation: rise .7s var(--ease-out) .28s both; }
+    .hero .cta { animation: rise .7s var(--ease-out) .38s both; }
+    .hero .stats > div { animation: rise .7s var(--ease-out) both; }
+    .hero .stats > div:nth-child(1) { animation-delay: .5s; }
+    .hero .stats > div:nth-child(2) { animation-delay: .57s; }
+    .hero .stats > div:nth-child(3) { animation-delay: .64s; }
+    #gain:not([hidden]) { animation: pop-in .26s var(--ease-out); }
+    #app.swap main, #app.swap footer { animation: swap .22s var(--ease-out); }
+    /* list reveals: content stays readable until the observer marks it in view */
+    .js-rv .rv { opacity: .35; transform: translateY(18px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); transition-delay: calc(var(--i, 0) * 60ms); }
+    .js-rv .rv.in { opacity: 1; transform: none; }
+    .js-rv .steps li::before { transform: scaleX(0); transition: transform .8s var(--ease-out); transition-delay: calc(var(--i, 0) * 110ms + 120ms); }
+    .js-rv .steps li.in::before { transform: scaleX(1); }
+    @supports selector(::details-content) {
+      details::details-content { block-size: 0; overflow: clip; transition: block-size .25s var(--ease-out), content-visibility .25s allow-discrete; }
+      details[open]::details-content { block-size: auto; }
+    }
+  }
+
+  @media (max-width: 820px) {
+    .nav .links { display: none; }
+    .calc, .contact { grid-template-columns: 1fr; }
+    .sec { padding-block: 64px; }
+    .hero .in { padding-block-start: 64px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track { animation: none; }
+    .marq { overflow-x: auto; }
+    .btn { transition: none; }
+  }
+</style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="ogp" viewBox="0 0 340 100">
     <g fill="currentColor" fill-rule="evenodd">
-      <path d="M11 0H89A11 11 0 0 1 100 11V89A11 11 0 0 1 89 100H11A11 11 0 0 1 0 89V11A11 11 0 0 1 11 0ZM31 28H69A3 3 0 0 1 72 31V69A3 3 0 0 1 69 72H31A3 3 0 0 1 28 69V31A3 3 0 0 1 31 28Z"></path>
-      <path transform="translate(120,0)" d="M11 0H89A11 11 0 0 1 100 11V31H33V67H68V54H100V89A11 11 0 0 1 89 100H11A11 11 0 0 1 0 89V11A11 11 0 0 1 11 0Z"></path>
-      <path transform="translate(240,0)" d="M11 0H89A11 11 0 0 1 100 11V59A11 11 0 0 1 89 70H41A5 5 0 0 0 36 75V89A11 11 0 0 1 25 100H11A11 11 0 0 1 0 89V11A11 11 0 0 1 11 0ZM33 27H65A3 3 0 0 1 68 30V47A3 3 0 0 1 65 50H33A3 3 0 0 1 30 47V30A3 3 0 0 1 33 27Z"></path>
+      <path d="M11 0H89A11 11 0 0 1 100 11V89A11 11 0 0 1 89 100H11A11 11 0 0 1 0 89V11A11 11 0 0 1 11 0ZM31 28H69A3 3 0 0 1 72 31V69A3 3 0 0 1 69 72H31A3 3 0 0 1 28 69V31A3 3 0 0 1 31 28Z"/>
+      <path transform="translate(120,0)" d="M11 0H89A11 11 0 0 1 100 11V31H33V67H68V54H100V89A11 11 0 0 1 89 100H11A11 11 0 0 1 0 89V11A11 11 0 0 1 11 0Z"/>
+      <path transform="translate(240,0)" d="M11 0H89A11 11 0 0 1 100 11V59A11 11 0 0 1 89 70H41A5 5 0 0 0 36 75V89A11 11 0 0 1 25 100H11A11 11 0 0 1 0 89V11A11 11 0 0 1 11 0ZM33 27H65A3 3 0 0 1 68 30V47A3 3 0 0 1 65 50H33A3 3 0 0 1 30 47V30A3 3 0 0 1 33 27Z"/>
     </g>
   </symbol>
-  <symbol id="i-track" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></symbol>
-  <symbol id="i-ads" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1ZM17 9a4 4 0 0 1 0 6M20 6.5a8 8 0 0 1 0 11"></path></symbol>
-  <symbol id="i-seo" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path></symbol>
-  <symbol id="i-cro" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M6 6l5 7v6l2-1v-5l5-7M20 16l-3 3-1.5-1.5"></path></symbol>
-  <symbol id="i-retarget" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4M12 8v4l3 2"></path></symbol>
-  <symbol id="i-web" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 5h18v14H3zM3 9h18M7 7h.01M10 7h.01"></path></symbol>
-  <symbol id="i-app" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M8 2h8a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1ZM11 19h2"></path></symbol>
-  <symbol id="i-lp" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 3h14v18H5zM8 8h8M8 12h8M8 16h4"></path></symbol>
+  <symbol id="i-track" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-ads" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1ZM17 9a4 4 0 0 1 0 6M20 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-seo" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/></symbol>
+  <symbol id="i-cro" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M6 6l5 7v6l2-1v-5l5-7M20 16l-3 3-1.5-1.5"/></symbol>
+  <symbol id="i-retarget" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4M12 8v4l3 2"/></symbol>
+  <symbol id="i-web" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 5h18v14H3zM3 9h18M7 7h.01M10 7h.01"/></symbol>
+  <symbol id="i-app" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M8 2h8a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1ZM11 19h2"/></symbol>
+  <symbol id="i-lp" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 3h14v18H5zM8 8h8M8 12h8M8 16h4"/></symbol>
 </svg>
 
-
+<style>
+  .nav .wa { font-size: 14px; color: var(--muted); text-decoration: none; }
+  .nav .wa:hover { color: var(--ink); }
+  .case .who { min-height: 3.1em; }
+  .case .tag { justify-self: start; margin-top: 6px; font: 600 11px var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--green); border: 1px solid rgba(61, 190, 122, .4); border-radius: 999px; padding: 3px 10px; }
+  #app[lang="ar"] .case .tag { letter-spacing: 0; text-transform: none; font-size: 12px; }
+  .proof { display: grid; gap: 16px; justify-items: start; margin-top: 32px; max-width: 70ch; }
+  .proof .measure { color: var(--muted); font-size: 15px; }
+  .proof .fine { color: var(--dim); font-size: 12px; }
+  .start-cta { margin-top: 36px; }
+  .founder { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 40px; align-items: center; margin-top: 24px; }
+  .founder img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%; border-radius: 16px; border: 1px solid var(--line); }
+  .founder blockquote { margin: 0 0 20px; font: 700 clamp(20px, 2.8vw, 28px) var(--head); line-height: 1.35; max-width: 34ch; text-wrap: balance; }
+  #app[lang="ar"] .founder blockquote { line-height: 1.7; }
+  .founder .nm { font: 800 18px var(--head); }
+  .founder .tt { color: var(--muted); font-size: 14px; }
+  footer .copy { flex-basis: 100%; border-top: 1px solid var(--line); padding-top: 22px; font-size: 13px; }
+  footer .copy.bank { border-top: 0; padding-top: 0; margin-top: -10px; }
+  @media (max-width: 820px) { .nav .wa { display: none; } }
+  @media (max-width: 640px) { .founder { grid-template-columns: minmax(0, 1fr); } .founder img { max-width: 240px; } }
+</style>
 <div dir="rtl" id="app" lang="ar">
 <header class="nav">
 <div class="wrap">
@@ -65,8 +310,8 @@
 <section aria-labelledby="h-creds" class="sec" style="padding-block:56px">
 <div class="wrap">
 <div class="creds" id="h-creds" role="list">
-<div class="cred" role="listitem"><img alt="Google Partner" height="117" src="/img/2c9c5e7451.png" width="352"><div><b>Google Partner</b><span class="en">Certified for Google Ads</span><span class="ar">شريك قوقل المعتمد في الإعلانات</span></div></div>
-<div class="cred" role="listitem"><img alt="Adjust Certified Solutions Partner, Advanced" height="310" src="/img/581c7cb113.png" style="max-height:92px" width="300"><div><b>Adjust</b><span class="en">Adjust partner and mobile app growth experts</span><span class="ar">شريك Adjust وخبراء في نمو التطبيقات</span></div></div>
+<div class="cred" role="listitem"><img alt="Google Partner" height="117" src="/img/2c9c5e7451.png" width="352"/><div><b>Google Partner</b><span class="en">Certified for Google Ads</span><span class="ar">شريك قوقل المعتمد في الإعلانات</span></div></div>
+<div class="cred" role="listitem"><img alt="Adjust Certified Solutions Partner, Advanced" height="310" src="/img/581c7cb113.png" style="max-height:92px" width="300"/><div><b>Adjust</b><span class="en">Adjust partner and mobile app growth experts</span><span class="ar">شريك Adjust وخبراء في نمو التطبيقات</span></div></div>
 </div>
 </div>
 </section>
@@ -78,23 +323,23 @@
 </div>
 </div>
 <div class="marq"><ul class="track" id="marquee">
-<li class="tile"><img alt="Siyyara" height="96" loading="lazy" src="/img/4287a176df.png" width="232"></li>
-<li class="tile"><img alt="Wala Plus" height="96" loading="lazy" src="/img/1c89f5aa24.png" width="237"></li>
-<li class="tile"><img alt="Tania" height="96" loading="lazy" src="/img/1ce6bca0d4.png" width="86"></li>
-<li class="tile"><img alt="Salla" height="96" loading="lazy" src="/img/55f99022db.png" width="222"></li>
-<li class="tile"><img alt="Jisr" height="96" loading="lazy" src="/img/8b2c1367ee.png" width="208"></li>
+<li class="tile"><img alt="Siyyara" height="96" loading="lazy" src="/img/4287a176df.png" width="232"/></li>
+<li class="tile"><img alt="Wala Plus" height="96" loading="lazy" src="/img/1c89f5aa24.png" width="237"/></li>
+<li class="tile"><img alt="Tania" height="96" loading="lazy" src="/img/1ce6bca0d4.png" width="86"/></li>
+<li class="tile"><img alt="Salla" height="96" loading="lazy" src="/img/55f99022db.png" width="222"/></li>
+<li class="tile"><img alt="Jisr" height="96" loading="lazy" src="/img/8b2c1367ee.png" width="208"/></li>
 
-<li class="tile"><img alt="Mahjoz" height="57" loading="lazy" src="/img/f6a1477fe2.png" width="260"></li>
-<li class="tile"><img alt="Mojaz" height="96" loading="lazy" src="/img/825b57f1d1.png" width="127"></li>
-<li class="tile"><img alt="Moddakir" height="96" loading="lazy" src="/img/2ad321e7d0.png" width="155"></li>
-<li class="tile"><img alt="Elm" height="96" loading="lazy" src="/img/7eded49311.png" width="96"></li>
-<li class="tile"><img alt="Drived" height="28" loading="lazy" src="/img/f2cd3125da.png" width="244"></li>
-<li class="tile"><img alt="Daleel Store" height="71" loading="lazy" src="/img/0b807e7326.png" width="253"></li>
-<li class="tile"><img alt="Labayh" height="64" loading="lazy" src="/img/f995a46398.png" width="181"></li>
-<li class="tile"><img alt="Gheras Alakhlaq Schools" height="96" loading="lazy" src="/img/5af171ce7c.png" width="147"></li>
-<li class="tile"><img alt="Hakeem Oyoun" height="96" loading="lazy" src="/img/cbe3af1031.png" width="130"></li>
+<li class="tile"><img alt="Mahjoz" height="57" loading="lazy" src="/img/f6a1477fe2.png" width="260"/></li>
+<li class="tile"><img alt="Mojaz" height="96" loading="lazy" src="/img/825b57f1d1.png" width="127"/></li>
+<li class="tile"><img alt="Moddakir" height="96" loading="lazy" src="/img/2ad321e7d0.png" width="155"/></li>
+<li class="tile"><img alt="Elm" height="96" loading="lazy" src="/img/7eded49311.png" width="96"/></li>
+<li class="tile"><img alt="Drived" height="28" loading="lazy" src="/img/f2cd3125da.png" width="244"/></li>
+<li class="tile"><img alt="Daleel Store" height="71" loading="lazy" src="/img/0b807e7326.png" width="253"/></li>
+<li class="tile"><img alt="Labayh" height="64" loading="lazy" src="/img/f995a46398.png" width="181"/></li>
+<li class="tile"><img alt="Gheras Alakhlaq Schools" height="96" loading="lazy" src="/img/5af171ce7c.png" width="147"/></li>
+<li class="tile"><img alt="Hakeem Oyoun" height="96" loading="lazy" src="/img/cbe3af1031.png" width="130"/></li>
 
-<li class="tile"><img alt="MPrive Realty" height="69" loading="lazy" src="/img/26a015b11d.png" width="260"></li>
+<li class="tile"><img alt="MPrive Realty" height="69" loading="lazy" src="/img/26a015b11d.png" width="260"/></li>
 </ul></div>
 </section>
 <section aria-labelledby="h-growth" class="sec" id="growth">
@@ -113,17 +358,16 @@
 <div class="calc">
 <div>
 <h3><span class="en">Growth simulator</span><span class="ar">محاكي النمو</span></h3>
-<div class="row"><label for="vis"><span class="en">Monthly visitors</span><span class="ar">الزيارات الشهرية</span><output for="vis" id="vOut">50,000</output></label><input id="vis" max="500000" min="5000" step="5000" type="range" value="50000"></div>
-<div class="row"><label for="conv"><span class="en">Conversion rate</span><span class="ar">معدل التحويل</span><output for="conv" id="cOut">2.0%</output></label><input id="conv" max="8" min="0.5" step="0.1" type="range" value="2"></div>
-<div class="row"><label for="aov"><span class="en">Average order value (SAR)</span><span class="ar">متوسط قيمة الطلب (ر.س)</span><output for="aov" id="aOut">300</output></label><input id="aov" max="2000" min="50" step="10" type="range" value="300"></div>
-<label class="sw" for="boost"><input id="boost" type="checkbox"><span class="en">Improve each lever by 10%</span><span class="ar">حسّن كل عنصر بنسبة 10٪</span></label>
+<div class="row"><label for="vis"><span class="en">Monthly visitors</span><span class="ar">الزيارات الشهرية</span><output for="vis" id="vOut">50,000</output></label><input id="vis" max="500000" min="5000" step="5000" type="range" value="50000"/></div>
+<div class="row"><label for="conv"><span class="en">Conversion rate</span><span class="ar">معدل التحويل</span><output for="conv" id="cOut">2.0%</output></label><input id="conv" max="8" min="0.5" step="0.1" type="range" value="2"/></div>
+<div class="row"><label for="aov"><span class="en">Average order value (SAR)</span><span class="ar">متوسط قيمة الطلب (ر.س)</span><output for="aov" id="aOut">300</output></label><input id="aov" max="2000" min="50" step="10" type="range" value="300"/></div>
+<label class="sw" for="boost"><input id="boost" type="checkbox"/><span class="en">Improve each lever by 10%</span><span class="ar">حسّن كل عنصر بنسبة 10٪</span></label>
 </div>
 <div class="out">
 <p class="vh" id="calc-sr" role="status"></p>
 <small><span class="en">Monthly revenue</span><span class="ar">الإيرادات الشهرية</span></small>
 <div class="big"><span class="en">SAR</span><span class="ar">ر.س</span> <span id="rev">300,000</span></div>
-<p class="gain" id="gain" hidden><span class="en">+33% revenue from three small gains.</span><span class="ar">+33٪ في الإيرادات من ثلاث تحسينات صغيرة.</span> <span id="was"></span></p>
-
+<div hidden="" id="gain"><span class="gain"><span class="en">+33% revenue from three small gains.</span><span class="ar">+33٪ في الإيرادات من ثلاث تحسينات صغيرة.</span></span> <small id="was"></small></div>
 <small><span class="en">Illustrative calculation, not a forecast.</span><span class="ar">حساب توضيحي وليس توقعاً.</span></small>
 </div>
 </div>
@@ -192,7 +436,7 @@
 </div>
 <p class="quote"><span class="en">“We turn <em>numbers</em> into real, tangible growth.”</span><span class="ar">“نترجم <em>الأرقام</em> إلى نمو حقيقي وملموس”</span></p>
 </div>
-</section><section aria-labelledby="h-founder" class="sec" id="founder" style="padding-block:64px"><div class="wrap"><span class="eyebrow" id="h-founder"><span class="en">Co-Founder &amp; CEO</span><span class="ar">شريك مؤسس ورئيس تنفيذي</span></span><div class="founder"><img alt="Omar Wahib Al-Bakri / عمر وهيب البكري" height="420" src="/img/70d46fca50.jpg" width="280"><div><blockquote><span class="en">At OGP, we believe our clients’ success is our success. That is why we work alongside them to build success stories that show in the numbers, and we take pride in contributing to the lasting growth of their businesses.</span><span class="ar">نؤمن في OGP أن نجاح عملائنا هو نجاحنا. لذلك نعمل معهم على بناء قصص نجاح تتجلى في الأرقام، ونسهم بكل اعتزاز في نمو أعمالهم واستمراره.</span></blockquote><div class="nm"><span class="en">Omar Waheeb Al-Bakree</span><span class="ar">عمر وهيب البكري</span></div><div class="tt"><span class="en">Co-Founder &amp; CEO</span><span class="ar">شريك مؤسس ورئيس تنفيذي</span></div></div></div></div></section>
+</section><section aria-labelledby="h-founder" class="sec" id="founder" style="padding-block:64px"><div class="wrap"><span class="eyebrow" id="h-founder"><span class="en">Co-Founder &amp; CEO</span><span class="ar">شريك مؤسس ورئيس تنفيذي</span></span><div class="founder"><img alt="Omar Wahib Al-Bakri / عمر وهيب البكري" height="420" src="/img/70d46fca50.jpg" width="280"/><div><blockquote><span class="en">At OGP, we believe our clients’ success is our success. That is why we work alongside them to build success stories that show in the numbers, and we take pride in contributing to the lasting growth of their businesses.</span><span class="ar">نؤمن في OGP أن نجاح عملائنا هو نجاحنا. لذلك نعمل معهم على بناء قصص نجاح تتجلى في الأرقام، ونسهم بكل اعتزاز في نمو أعمالهم واستمراره.</span></blockquote><div class="nm"><span class="en">Omar Waheeb Al-Bakree</span><span class="ar">عمر وهيب البكري</span></div><div class="tt"><span class="en">Co-Founder &amp; CEO</span><span class="ar">شريك مؤسس ورئيس تنفيذي</span></div></div></div></div></section>
 
 
 <section aria-labelledby="h-start" class="sec" id="start"><div class="wrap"><div class="head"><h2 id="h-start"><span class="en">How to get started</span><span class="ar">كيف نبدأ</span></h2></div><ol class="steps"><li><span class="n">01</span><h3><span class="en">Introductory meeting</span><span class="ar">اجتماع مبدئي</span></h3><p><span class="en">We learn about your business and objectives.</span><span class="ar">نتعرف على نشاطكم وأهدافكم</span></p></li><li><span class="n">02</span><h3><span class="en">Current-state analysis</span><span class="ar">تحليل الوضع الحالي</span></h3><p><span class="en">We analyze your website and ad accounts, and provide a report of key opportunities.</span><span class="ar">نحلل موقعكم وحساباتكم الإعلانية، ونقدم لكم تقريراً بأبرز الفرص.</span></p></li><li><span class="n">03</span><h3><span class="en">Agreeing on the plan</span><span class="ar">الاتفاق على الخطة</span></h3><p><span class="en">We present a clear plan and pricing, and begin work once you approve.</span><span class="ar">نعرض عليكم خطة وتسعيراً واضحين، ونباشر العمل بعد موافقتكم.</span></p></li><li><span class="n">04</span><h3><span class="en">Launch and follow-up</span><span class="ar">الإطلاق والمتابعة</span></h3><p><span class="en">We launch the campaigns and provide regular performance reports.</span><span class="ar">نطلق الحملات، ونرفع لكم تقارير دورية بالنتائج.</span></p></li></ol><div class="start-cta"><a class="btn" href="#contact"><span class="en">Get your free audit</span><span class="ar">اطلب تحليل مجاني</span></a></div></div></section><section aria-labelledby="h-contact" class="sec band" id="contact">
@@ -208,11 +452,11 @@
 </div>
 </div>
 <form id="lead" novalidate="">
-<label for="f-name"><span class="en">Name</span><span class="ar">الاسم</span><input autocomplete="name" id="f-name" name="name" required="" type="text"></label>
-<label for="f-phone"><span class="en">Phone or WhatsApp</span><span class="ar">الجوال أو واتساب</span><input autocomplete="tel" id="f-phone" name="phone" required="" type="tel"></label>
-<label for="f-site"><span class="en">Website or store link</span><span class="ar">رابط الموقع أو المتجر</span><input autocomplete="url" id="f-site" name="site" type="url"></label>
+<label for="f-name"><span class="en">Name</span><span class="ar">الاسم</span><input autocomplete="name" id="f-name" name="name" required="" type="text"/></label>
+<label for="f-phone"><span class="en">Phone or WhatsApp</span><span class="ar">الجوال أو واتساب</span><input autocomplete="tel" id="f-phone" name="phone" required="" type="tel"/></label>
+<label for="f-site"><span class="en">Website or store link</span><span class="ar">رابط الموقع أو المتجر</span><input autocomplete="url" id="f-site" name="site" type="url"/></label>
 <label for="f-need"><span class="en">What do you need?</span><span class="ar">ماذا تحتاج؟</span>
-<select id="f-need" name="need"><option data-ar="إعلانات وتسويق" data-en="Ads and marketing" value="ads">إعلانات وتسويق</option><option data-ar="موقع أو تطبيق" data-en="Website or app" value="web">موقع أو تطبيق</option><option data-ar="كلاهما" data-en="Both" value="both">كلاهما</option></select>
+<select id="f-need" name="need"><option data-ar="إعلانات وتسويق" data-en="Ads and marketing" value="ads">Ads and marketing</option><option data-ar="موقع أو تطبيق" data-en="Website or app" value="web">Website or app</option><option data-ar="كلاهما" data-en="Both" value="both">Both</option></select>
 </label>
 <button class="btn" type="submit"><span class="en">Request my free audit</span><span class="ar">اطلب تحليلي المجاني</span></button>
 <p id="status" role="status"></p>
