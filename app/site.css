@@ -157,7 +157,7 @@ input[type="range"] { width: 100%; accent-color: var(--green); }
 
 .out small { color: var(--dim); font-size: 12px; }
 
-.out .big { font-style: ; font-variant-ligatures: ; font-variant-caps: ; font-variant-east-asian: ; font-variant-alternates: ; font-variant-position: ; font-variant-emoji: ; font-weight: ; font-stretch: ; font-size: ; font-family: ; font-optical-sizing: ; font-size-adjust: ; font-kerning: ; font-feature-settings: ; font-variation-settings: ; font-language-override: ; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.out .big { font: 800 clamp(34px, 5vw, 54px) var(--head); font-variant-numeric: tabular-nums; line-height: 1.1; }
 
 .out .gain { color: var(--green); font-weight: 700; }
 
@@ -201,7 +201,7 @@ input[type="range"] { width: 100%; accent-color: var(--green); }
 
 .case .who { color: var(--dim); font-size: 13px; }
 
-.case .big { font-style: ; font-variant-ligatures: ; font-variant-caps: ; font-variant-numeric: ; font-variant-east-asian: ; font-variant-alternates: ; font-variant-position: ; font-variant-emoji: ; font-weight: ; font-stretch: ; font-size: ; font-family: ; font-optical-sizing: ; font-size-adjust: ; font-kerning: ; font-feature-settings: ; font-variation-settings: ; font-language-override: ; color: var(--green); line-height: 1; }
+.case .big { font: 800 clamp(44px, 6vw, 64px) var(--head); color: var(--green); line-height: 1; }
 
 .case p { color: var(--muted); font-size: 14px; }
 
@@ -213,7 +213,7 @@ input[type="range"] { width: 100%; accent-color: var(--green); }
 
 .why p { color: var(--muted); font-size: 14px; }
 
-.quote { font-style: ; font-variant-ligatures: ; font-variant-caps: ; font-variant-numeric: ; font-variant-east-asian: ; font-variant-alternates: ; font-variant-position: ; font-variant-emoji: ; font-weight: ; font-stretch: ; font-size: ; font-family: ; font-optical-sizing: ; font-size-adjust: ; font-kerning: ; font-feature-settings: ; font-variation-settings: ; font-language-override: ; line-height: 1.25; max-width: 28ch; text-wrap: balance; }
+.quote { font: 700 clamp(22px, 3vw, 34px) var(--head); line-height: 1.25; max-width: 28ch; text-wrap: balance; }
 
 .quote em { font-style: normal; color: var(--green); }
 
@@ -312,9 +312,9 @@ footer a:hover { color: var(--ink); }
   .hero .stats > div:nth-child(3) { animation-delay: 0.64s; }
   #gain:not([hidden]) { animation: pop-in .26s var(--ease-out); }
   #app.swap main, #app.swap footer { animation: swap .22s var(--ease-out); }
-  .js-rv .rv { opacity: 0.35; transform: translateY(18px); transition-property: ; transition-duration: ; transition-timing-function: ; transition-behavior: ; transition-delay: calc(var(--i, 0) * 60ms); }
+  .js-rv .rv { transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); opacity: 0.35; transform: translateY(18px); transition-delay: calc(var(--i, 0) * 60ms); }
   .js-rv .rv.in { opacity: 1; transform: none; }
-  .js-rv .steps li::before { transform: scaleX(0); transition-property: ; transition-duration: ; transition-timing-function: ; transition-behavior: ; transition-delay: calc(var(--i, 0) * 110ms + 120ms); }
+  .js-rv .steps li::before { transition: transform .7s var(--ease-out); transform: scaleX(0); transition-delay: calc(var(--i, 0) * 110ms + 120ms); }
   .js-rv .steps li.in::before { transform: scaleX(1); }
   @supports selector(::details-content) {
   details::details-content { block-size: 0px; overflow: clip; transition: block-size .25s var(--ease-out), content-visibility .25s allow-discrete; }
@@ -358,7 +358,7 @@ footer a:hover { color: var(--ink); }
 
 .founder img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%; border-radius: 16px; border: 1px solid var(--line); }
 
-.founder blockquote { margin: 0px 0px 20px; font-style: ; font-variant-ligatures: ; font-variant-caps: ; font-variant-numeric: ; font-variant-east-asian: ; font-variant-alternates: ; font-variant-position: ; font-variant-emoji: ; font-weight: ; font-stretch: ; font-size: ; font-family: ; font-optical-sizing: ; font-size-adjust: ; font-kerning: ; font-feature-settings: ; font-variation-settings: ; font-language-override: ; line-height: 1.35; max-width: 34ch; text-wrap: balance; }
+.founder blockquote { font: 700 clamp(20px, 2.6vw, 28px) var(--head); margin: 0px 0px 20px; line-height: 1.35; max-width: 34ch; text-wrap: balance; }
 
 #app[lang="ar"] .founder blockquote { line-height: 1.7; }
 
