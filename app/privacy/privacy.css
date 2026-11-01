@@ -1,0 +1,16 @@
+.pv { --bg:#06110c; --ink:#f6f5f1; --muted:#a9c7b6; --green:#3dbe7a; --line:rgba(255,255,255,.12); min-height:100dvh; background:var(--bg); color:var(--ink); font:400 16px/1.7 "Archivo","IBM Plex Sans Arabic","Helvetica Neue",Arial,sans-serif; }
+.pv * { box-sizing:border-box; }
+.pv a { color:var(--green); }
+.pv-top { border-bottom:1px solid var(--line); background:#081710; }
+.pv-bar { max-width:860px; margin:0 auto; padding:0 20px; height:60px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.pv-bar a.home { color:var(--ink); font-weight:800; text-decoration:none; font-size:18px; }
+.pv-langs { display:flex; gap:8px; }
+.pv-langs a { border:1px solid var(--line); border-radius:999px; padding:5px 14px; text-decoration:none; color:var(--muted); font-size:14px; }
+.pv-langs a:hover { border-color:var(--green); color:var(--ink); }
+.pv-main { max-width:860px; margin:0 auto; padding:40px 20px 80px; display:grid; gap:64px; }
+.pv-doc h1 { font:800 clamp(28px,5vw,40px)/1.2 "Noto Kufi Arabic","Archivo",Arial,sans-serif; margin:0 0 6px; }
+.pv-doc h2 { font-size:19px; margin:30px 0 8px; font-weight:700; }
+.pv-doc p, .pv-doc li { color:#dbe7e0; }
+.pv-doc ul { padding-inline-start:22px; margin:8px 0; }
+.pv-doc .upd { color:var(--muted); font-size:14px; }
+.pv-doc[dir="rtl"] { font-family:"IBM Plex Sans Arabic","Archivo",Arial,sans-serif; }

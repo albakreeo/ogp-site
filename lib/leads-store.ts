@@ -34,6 +34,7 @@ export type LeadRecord = {
   referrer: string | null;
   ip: string | null;
   user_agent: string | null;
+  consent_at: Date | string | null;
 };
 
 export type NewLead = Omit<LeadRecord, "id" | "created_at" | "status" | "note" | "tags">;
@@ -42,7 +43,7 @@ const COLS = [
   "name", "phone", "site", "need", "lang", "cta_source",
   "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
   "gclid", "gbraid", "wbraid", "fbclid", "campaign_id", "adgroup_id", "keyword",
-  "landing_page", "referrer", "ip", "user_agent",
+  "landing_page", "referrer", "ip", "user_agent", "consent_at",
 ] as const;
 
 export async function insertLead(lead: NewLead): Promise<void> {

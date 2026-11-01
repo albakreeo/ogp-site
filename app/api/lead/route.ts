@@ -67,6 +67,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "invalid" }, { status: 422 });
   }
 
+  if (body.consent !== true) {
+    return NextResponse.json({ ok: false, error: "consent_required" }, { status: 422 });
+  }
+
   const emailConfigured = Boolean(process.env.RESEND_API_KEY);
   if (!isDbConfigured && !emailConfigured) {
     console.error("[lead] Neither DATABASE_URL nor RESEND_API_KEY is set; lead was not stored.");
@@ -97,6 +101,7 @@ export async function POST(req: Request) {
     referrer: str(body.referrer, 500) || null,
     ip,
     user_agent: (req.headers.get("user-agent") ?? "").slice(0, 300) || null,
+    consent_at: new Date().toISOString(),
   };
 
   let stored = false;

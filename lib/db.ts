@@ -34,8 +34,10 @@ create table if not exists leads (
   landing_page text,
   referrer text,
   ip text,
-  user_agent text
+  user_agent text,
+  consent_at timestamptz
 );
+alter table leads add column if not exists consent_at timestamptz;
 create index if not exists leads_created_idx on leads (created_at desc);
 create index if not exists leads_status_idx on leads (status);
 `;

@@ -84,6 +84,7 @@ function Tracking({ lead }: { lead: LeadWithChannel }) {
         <Row k="Landing page" v={lead.landing_page} />
         <Row k="Referrer" v={lead.referrer} />
         <Row k="Page language" v={lead.lang === "en" ? "English" : "Arabic"} />
+        <Row k="Consent given" v={lead.consent_at ? dateFormat.format(new Date(lead.consent_at)) : null} />
         <Row k="IP" v={lead.ip} />
         <Row k="Browser" v={lead.user_agent} />
       </dl>

@@ -132,6 +132,10 @@
       statusEl.textContent = ar ? 'يرجى إدخال الاسم ورقم الجوال.' : 'Please enter your name and phone number.';
       return;
     }
+    if (!document.getElementById('f-consent').checked) {
+      statusEl.textContent = ar ? 'يرجى الموافقة على سياسة الخصوصية لإرسال الطلب.' : 'Please agree to the Privacy Policy to send your request.';
+      return;
+    }
     btn.disabled = true;
     statusEl.textContent = ar ? 'جارٍ الإرسال…' : 'Sending…';
     fetch('/api/lead', {
@@ -143,6 +147,7 @@
         site: document.getElementById('f-site').value.trim(),
         need: document.getElementById('f-need').value,
         company: (leadForm.querySelector('[name="company"]') || {}).value || '',
+        consent: true,
         lang: ar ? 'ar' : 'en',
         cta_source: lastCta || 'contact-form'
       }))

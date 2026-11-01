@@ -29,7 +29,7 @@ Environment variables (Vercel → Project → Settings → Environment Variables
 | Variable | Purpose |
 | --- | --- |
 | `DATABASE_URL` | Set automatically when a Neon Postgres database is added from the project's Storage tab. The `leads` table is created on first use. |
-| `ADMIN_USER`, `ADMIN_PASSWORD` | Login for `/admin/leads`. The admin returns 503 until both are set. |
+| `ADMIN_USER`, `ADMIN_PASSWORD` | The single login for `/admin/leads` (one user). The admin returns 503 until both are set. |
 | `RESEND_API_KEY` | Sends the notification email (optional if the database is connected). |
 | `LEAD_TO_EMAIL` | Recipient, default `info@ogpdigital.com`. |
 | `LEAD_FROM_EMAIL` | Sender, e.g. `OGP Website <noreply@ogpdigital.com>` once the domain is verified in Resend. |

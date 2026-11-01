@@ -257,3 +257,8 @@
 .eq .lv b span { font-size: inherit; color: inherit; }
 .eq .lv b { font-size: 26px; }
 .eq .lv span { font-size: 14px; }
+
+/* consent checkbox in the contact form */
+.consent { align-items: flex-start; font-size: 13px; color: #C9D8D0; line-height: 1.5; }
+.consent input { flex: none; margin-top: 2px; }
+.consent a { color: var(--green); text-decoration: underline; }
