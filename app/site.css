@@ -244,3 +244,16 @@
   footer .copy.bank { border-top: 0; padding-top: 0; margin-top: -10px; }
   @media (max-width: 820px) { .nav .wa { display: none; } }
   @media (max-width: 640px) { .founder { grid-template-columns: minmax(0, 1fr); } .founder img { max-width: 240px; } }
+
+/* --- OGP edits --- */
+/* WhatsApp buttons: green so they stand out (white on #15803D = 5:1) */
+.btn[href*="wa.me"], #wa-follow { background: #15803D; color: #fff; border-color: #15803D; }
+@media (hover: hover) and (pointer: fine) { .btn[href*="wa.me"]:hover, #wa-follow:hover { background: #166534; border-color: #166534; } }
+.nav .wa { display: inline-flex; align-items: center; background: #15803D; color: #fff; font-weight: 600; padding: 8px 16px; border-radius: 999px; transition: background .2s ease; }
+.nav .wa:hover { background: #166534; color: #fff; }
+@media (max-width: 820px) { .nav .wa { display: none; } }
+
+/* Growth equation: the labels sit inside <span>, which the 13px caption rule was shrinking */
+.eq .lv b span { font-size: inherit; color: inherit; }
+.eq .lv b { font-size: 26px; }
+.eq .lv span { font-size: 14px; }
