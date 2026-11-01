@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import "./site.css";
 
 export const metadata: Metadata = {
   title: "OGP — Online Growth Partner | شريك النمو الرقمي",

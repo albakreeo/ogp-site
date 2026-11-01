@@ -3,6 +3,35 @@
   var app = document.getElementById('app');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* visitor attribution: UTM labels, ad click ids, first-touch landing page and referrer */
+  var TK = 'ogp_tracking';
+  var URL_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'gbraid', 'wbraid', 'fbclid'];
+  var AD_KEYS = { campaignid: 'campaign_id', adgroupid: 'adgroup_id', keyword: 'keyword' };
+  function collectTracking() {
+    var stored = {};
+    try { stored = JSON.parse(sessionStorage.getItem(TK) || '{}') || {}; } catch (e) {}
+    var q = new URLSearchParams(location.search), found = {};
+    URL_KEYS.forEach(function (k) { var v = q.get(k); if (v) found[k] = v.slice(0, 200); });
+    var src = q.get('src'); if (src && !found.utm_source) found.utm_source = src.slice(0, 200);
+    Object.keys(AD_KEYS).forEach(function (k) { var v = q.get(k); if (v) found[AD_KEYS[k]] = v.slice(0, 200); });
+    var merged = Object.assign({}, stored, found);
+    /* first touch of the session only: where the visitor came from and where they landed */
+    if (!merged.landing_page) merged.landing_page = location.origin + location.pathname;
+    if (merged.referrer === undefined) merged.referrer = (document.referrer || '').slice(0, 500);
+    try { sessionStorage.setItem(TK, JSON.stringify(merged)); } catch (e) {}
+    return merged;
+  }
+  collectTracking();
+
+  /* which button opened the contact form (header, hero, services, results, ...) */
+  var lastCta = '';
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href="#contact"]');
+    if (!a) return;
+    var box = a.closest('section, header, footer');
+    lastCta = box ? (box.id || box.tagName.toLowerCase()) : 'page';
+  });
+
   /* language */
   function setLang(l, animate) {
     app.setAttribute('lang', l);
@@ -108,14 +137,15 @@
     fetch('/api/lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      body: JSON.stringify(Object.assign(collectTracking(), {
         name: name,
         phone: phone,
         site: document.getElementById('f-site').value.trim(),
         need: document.getElementById('f-need').value,
         company: (leadForm.querySelector('[name="company"]') || {}).value || '',
-        lang: ar ? 'ar' : 'en'
-      })
+        lang: ar ? 'ar' : 'en',
+        cta_source: lastCta || 'contact-form'
+      }))
     }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok && d.ok, status: r.status }; }); })
       .then(function (res) {
         if (res.ok) {

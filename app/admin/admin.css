@@ -1,0 +1,58 @@
+.adm { --bg:#06110c; --card:#0d1c15; --line:rgba(255,255,255,.12); --ink:#f6f5f1; --muted:#a9c7b6; --green:#3dbe7a; --wa:#15803d; min-height:100dvh; background:var(--bg); color:var(--ink); font:400 15px/1.5 "Archivo","Helvetica Neue",Arial,sans-serif; }
+.adm * { box-sizing:border-box; }
+.adm a { color:var(--green); text-decoration:none; }
+.adm a:hover { text-decoration:underline; }
+.adm h1 { font-size:28px; margin:0; font-weight:800; }
+.adm h2 { font-size:15px; margin:0 0 12px; font-weight:700; }
+.adm h3 { font-size:18px; margin:2px 0 6px; font-weight:700; }
+.adm p { margin:2px 0; }
+.adm code { background:rgba(255,255,255,.08); padding:1px 6px; border-radius:6px; font-size:13px; }
+.muted { color:var(--muted); }
+.adm-wrap { max-width:1180px; margin:0 auto; padding:0 20px; }
+.adm-top { border-bottom:1px solid var(--line); background:#081710; }
+.adm-bar { display:flex; align-items:center; justify-content:space-between; height:56px; }
+.adm-brand { font-weight:800; font-size:18px; color:var(--ink) !important; }
+.adm-brand span { color:var(--muted); font-weight:500; margin-left:4px; }
+.adm-nav { display:flex; gap:6px; }
+.adm-nav a { color:var(--muted); padding:8px 12px; border-radius:8px; }
+.adm-nav a:hover { background:rgba(255,255,255,.07); color:var(--ink); text-decoration:none; }
+.adm-main { padding-top:28px; padding-bottom:60px; }
+.stack { display:grid; gap:20px; }
+.head { display:flex; flex-wrap:wrap; gap:16px; align-items:flex-end; justify-content:space-between; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; }
+.card.narrow { max-width:620px; }
+.card.empty { text-align:center; padding:40px; }
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
+.stat b { display:block; font-size:30px; font-weight:800; }
+.stat span { color:var(--muted); font-size:13px; }
+.search { display:flex; gap:8px; }
+.adm input, .adm select, .adm textarea { background:rgba(255,255,255,.07); border:1px solid var(--line); color:var(--ink); border-radius:10px; padding:9px 12px; font:inherit; width:100%; }
+.search input { width:300px; max-width:60vw; }
+.adm button { background:var(--ink); color:#06261a; border:0; border-radius:999px; padding:9px 20px; font-weight:700; font-size:14px; font-family:inherit; cursor:pointer; }
+.adm button:hover { background:#fff; }
+.chips, .tabs { display:flex; flex-wrap:wrap; gap:8px; }
+.chip, .tab { border:1px solid var(--line); border-radius:999px; padding:6px 14px; color:var(--muted) !important; font-size:14px; }
+.chip span, .tab span { margin-left:6px; color:var(--ink); font-variant-numeric:tabular-nums; }
+.chip.on, .tab.on { background:var(--green); color:#04180d !important; border-color:var(--green); }
+.chip.on span, .tab.on span { color:#04180d; }
+.chip:hover, .tab:hover { text-decoration:none; border-color:var(--green); }
+.list { display:grid; gap:14px; }
+.lead { position:relative; }
+.lead-main { display:grid; grid-template-columns:1.1fr 1.2fr 1fr; gap:24px; }
+@media (max-width:900px){ .lead-main { grid-template-columns:1fr; } }
+.lead-src p { font-size:14px; }
+.badge { display:inline-block; background:rgba(61,190,122,.15); border:1px solid rgba(61,190,122,.5); color:var(--green); border-radius:999px; padding:3px 12px; font-weight:700; font-size:13px; margin-bottom:6px; }
+.clip { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:300px; }
+.wa { color:#4ade80 !important; font-weight:600; }
+.trk { margin-top:8px; }
+.trk summary { cursor:pointer; color:var(--muted); font-size:13px; }
+.trk dl { margin:8px 0 0; display:grid; gap:6px; }
+.kv { display:grid; grid-template-columns:120px 1fr; gap:10px; font-size:13px; }
+.kv dt { color:var(--muted); }
+.kv dd { margin:0; word-break:break-all; }
+.lead-edit { display:grid; gap:10px; }
+.lead-edit label span { display:block; font-size:12px; color:var(--muted); margin-bottom:3px; }
+.lead-edit .row { display:flex; justify-content:flex-end; align-items:flex-start; }
+.del { position:absolute; right:16px; bottom:14px; }
+.del .link-danger { background:none; color:#f87171; padding:0; font-weight:500; font-size:13px; }
+.del .link-danger:hover { background:none; text-decoration:underline; }
