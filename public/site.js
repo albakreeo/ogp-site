@@ -91,14 +91,60 @@
   });
   calc();
 
-  /* lead form: prototype only */
-  document.getElementById('lead').addEventListener('submit', function (e) {
+  /* lead form: sends the request to /api/lead (email) */
+  var leadForm = document.getElementById('lead');
+  leadForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var ar = app.getAttribute('lang') === 'ar';
+    var statusEl = document.getElementById('status');
+    var btn = leadForm.querySelector('button[type="submit"]');
     var name = document.getElementById('f-name').value.trim(), phone = document.getElementById('f-phone').value.trim();
-    document.getElementById('status').textContent = (!name || !phone)
-      ? (ar ? 'يرجى إدخال الاسم ورقم الجوال.' : 'Please enter your name and phone number.')
-      : (ar ? 'هذا نموذج أولي، لم يُرسل شيء.' : 'This is a prototype, nothing was sent.');
+    if (!name || !phone) {
+      statusEl.textContent = ar ? 'يرجى إدخال الاسم ورقم الجوال.' : 'Please enter your name and phone number.';
+      return;
+    }
+    btn.disabled = true;
+    statusEl.textContent = ar ? 'جارٍ الإرسال…' : 'Sending…';
+    fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        phone: phone,
+        site: document.getElementById('f-site').value.trim(),
+        need: document.getElementById('f-need').value,
+        company: (leadForm.querySelector('[name="company"]') || {}).value || '',
+        lang: ar ? 'ar' : 'en'
+      })
+    }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok && d.ok, status: r.status }; }); })
+      .then(function (res) {
+        if (res.ok) {
+          statusEl.textContent = ar ? 'شكراً لك! استلمنا طلبك وسنتواصل معك قريباً.' : 'Thank you! We received your request and will contact you soon.';
+          /* offer to continue the conversation on WhatsApp, prefilled */
+          var old = document.getElementById('wa-follow'); if (old) old.remove();
+          var msg = ar
+            ? 'مرحباً OGP، أرسلت طلب تحليل مجاني.\nالاسم: ' + name + '\nالجوال: ' + phone
+            : 'Hello OGP, I just sent a free audit request.\nName: ' + name + '\nPhone: ' + phone;
+          var wa = document.createElement('a');
+          wa.id = 'wa-follow';
+          wa.className = 'btn';
+          wa.target = '_blank';
+          wa.rel = 'noopener';
+          wa.style.marginTop = '12px';
+          wa.href = 'https://wa.me/966579294514?text=' + encodeURIComponent(msg);
+          wa.textContent = ar ? 'تابع المحادثة عبر واتساب' : 'Continue on WhatsApp';
+          statusEl.insertAdjacentElement('afterend', wa);
+          leadForm.reset();
+        } else if (res.status === 422) {
+          statusEl.textContent = ar ? 'يرجى التحقق من الاسم ورقم الجوال.' : 'Please check your name and phone number.';
+        } else {
+          statusEl.textContent = ar ? 'حدث خطأ. حاول مرة أخرى أو راسلنا عبر واتساب.' : 'Something went wrong. Please try again or message us on WhatsApp.';
+        }
+      })
+      .catch(function () {
+        statusEl.textContent = ar ? 'حدث خطأ. حاول مرة أخرى أو راسلنا عبر واتساب.' : 'Something went wrong. Please try again or message us on WhatsApp.';
+      })
+      .then(function () { btn.disabled = false; });
   });
 
   /* list reveals: services, process steps, results, reasons. Content stays readable if the observer never runs. */
