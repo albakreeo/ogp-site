@@ -40,6 +40,11 @@ create table if not exists leads (
 alter table leads add column if not exists consent_at timestamptz;
 create index if not exists leads_created_idx on leads (created_at desc);
 create index if not exists leads_status_idx on leads (status);
+create table if not exists site_settings (
+  key text primary key,
+  value text not null,
+  updated_at timestamptz not null default now()
+);
 `;
 
 let pool: Pool | undefined;

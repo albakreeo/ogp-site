@@ -34,5 +34,8 @@ Environment variables (Vercel → Project → Settings → Environment Variables
 | `LEAD_TO_EMAIL` | Recipient, default `info@ogpdigital.com`. |
 | `LEAD_FROM_EMAIL` | Sender, e.g. `OGP Website <noreply@ogpdigital.com>` once the domain is verified in Resend. |
 
+Admin pages: `/admin` (dashboard), `/admin/leads` (leads), `/admin/seo` (SEO tags and page headings).
+SEO tags and headings are stored in the database; an empty field means the default text from the code.
+
 Campaign links: `?utm_source=...&utm_medium=...&utm_campaign=...`. For Google Ads add
 `&campaignid={campaignid}&adgroupid={adgroupid}&keyword={keyword}` to the tracking template.
