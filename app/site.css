@@ -25,6 +25,8 @@
     interpolate-size: allow-keywords;
   }
   #app[lang="ar"] { --head: "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif; --body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif; }
+  /* body text inherits the font from here, so the Arabic font applies when the page is in Arabic */
+  #app { font-family: var(--body); }
   #app[lang="en"] .ar, #app[lang="ar"] .en { display: none !important; }
 
   * { box-sizing: border-box; }

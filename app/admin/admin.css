@@ -1,5 +1,6 @@
 .adm { --bg:#06110c; --card:#0d1c15; --line:rgba(255,255,255,.12); --ink:#f6f5f1; --muted:#a9c7b6; --green:#3dbe7a; --wa:#15803d; min-height:100dvh; background:var(--bg); color:var(--ink); font:400 15px/1.5 "Archivo","Helvetica Neue",Arial,sans-serif; }
 .adm * { box-sizing:border-box; }
+body:has(.adm) { margin:0; }
 .adm a { color:var(--green); text-decoration:none; }
 .adm a:hover { text-decoration:underline; }
 .adm h1 { font-size:28px; margin:0; font-weight:800; }
@@ -53,7 +54,7 @@
 .lead-edit { display:grid; gap:10px; }
 .lead-edit label span { display:block; font-size:12px; color:var(--muted); margin-bottom:3px; }
 .lead-edit .row { display:flex; justify-content:flex-end; align-items:flex-start; }
-.del { position:absolute; right:16px; bottom:14px; }
+.del { position:absolute; left:18px; bottom:16px; }
 .del .link-danger { background:none; color:#f87171; padding:0; font-weight:500; font-size:13px; }
 .del .link-danger:hover { background:none; text-decoration:underline; }
 
@@ -90,3 +91,15 @@
 .chart rect { fill:var(--green); }
 .chart text { fill:var(--muted); font-size:10px; }
 .none { color:var(--muted); font-size:14px; }
+
+/* phones: the header wraps and the menu scrolls sideways; Delete sits under the form instead of over Save */
+@media (max-width:900px){
+  .del { position:static; margin-top:10px; }
+}
+@media (max-width:700px){
+  .adm-bar { flex-wrap:wrap; height:auto; padding-top:10px; padding-bottom:6px; row-gap:4px; }
+  .adm-nav { width:100%; overflow-x:auto; gap:2px; scrollbar-width:none; }
+  .adm-nav::-webkit-scrollbar { display:none; }
+  .adm-nav a { white-space:nowrap; padding:8px 10px; }
+  .adm-nav a:first-child { padding-left:0; }
+}
